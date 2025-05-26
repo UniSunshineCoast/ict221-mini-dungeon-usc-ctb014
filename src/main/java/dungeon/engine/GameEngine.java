@@ -13,7 +13,7 @@ public class GameEngine {
 
     /**
 
-     *TESTING
+     *TEST
 
      * Creates a square game board.
      *
