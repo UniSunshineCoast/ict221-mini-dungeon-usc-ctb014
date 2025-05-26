@@ -4,6 +4,8 @@ import javafx.scene.text.Text;
 
 public class GameEngine {
 
+    Player player;
+
     /**
      * An example board to store the current game state.
 
@@ -11,18 +13,27 @@ public class GameEngine {
      */
     private Cell[][] map;
 
+    public void initialize(){
+
+        player = new Player(0,0);
+
+    }
+
+
     /**
      * Creates a square game board.
      *
      * @param size the width and height.
      */
+
+
     public GameEngine(int size) {
         map = new Cell[size][size];
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 Cell cell = new Cell();
-                Text text = new Text(i + "," + j);
+                Text text = new Text(" ");
                 cell.getChildren().add(text);
                 map[i][j] = cell;
             }
@@ -31,6 +42,8 @@ public class GameEngine {
         map[0][0].setStyle("-fx-background-color: #7baaa4");
         map[size-1][size-1].setStyle("-fx-background-color: #7baaa4");
     }
+
+ 
 
     /**
      * The size of the current game.
@@ -57,4 +70,5 @@ public class GameEngine {
         GameEngine engine = new GameEngine(10);
         System.out.printf("The size of map is %d * %d\n", engine.getSize(), engine.getSize());
     }
+
 }

@@ -2,17 +2,31 @@ package dungeon.engine;
 
 public class Player {
 
-    // Player Attributes
-    private int health = 10;
-    private int score = 0;
-    private int steps = 100;
+    //Player Constants
+    int maxHealth = 10;
 
-    public int x;
-    public int y;
+    // Player Attributes
+    private int health;
+    private int score;
+    private int steps;
+
+    private int x;
+    private int y;
+
+
+    //Constructor
+    public Player(int startX, int startY) {
+        this.x = startX;
+        this.y = startY;
+
+        //Player Constants
+        this.health = maxHealth;
+        this.steps = 100;
+    }
 
 
     // Changes the score based on an operation
-    public void set_player_score(int scoreAmount, char operation) {
+    public void setPlayerScore(int scoreAmount, char operation) {
         if (operation == '+') {score += scoreAmount;}
         if (operation == '-') {score -= scoreAmount;}
         if (operation == '*') {score *= scoreAmount;}
@@ -21,11 +35,11 @@ public class Player {
     }
 
     // Gets the current player score
-    public int get_player_score() {return score;}
+    public int getPlayerScore() {return score;}
 
 
     // Changes the health based on an operation
-    public void set_player_health(int healthAmount, char operation) {
+    public void setPlayerHealth(int healthAmount, char operation) {
         if (operation == '+') {health += healthAmount;}
         if (operation == '-') {health -= healthAmount;}
         if (operation == '*') {health *= healthAmount;}
@@ -34,7 +48,7 @@ public class Player {
     }
 
     // Gets the current player health
-    public int get_player_health() {return health;}
+    public int getPlayerHealth() {return health;}
 
 
 
@@ -60,7 +74,15 @@ public class Player {
     }
 
     //Gets the remanding steps
-    public int get_steps() {return steps;}
+    public int getSteps() {return steps;}
 
+    //Get Current Player Position
+    public int getX() {return x;}
+    public int getY() {return y;}
+
+
+    //Set Player Position
+    public void setX(int newX){x = newX;}
+    public void setY(int newY){y = newY;}
 
 }
