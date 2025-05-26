@@ -12,9 +12,6 @@ public class GameEngine {
     private Cell[][] map;
 
     /**
-
-     *TEST
-
      * Creates a square game board.
      *
      * @param size the width and height.
