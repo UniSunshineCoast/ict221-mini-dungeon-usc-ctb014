@@ -3,9 +3,9 @@ package dungeon.engine;
 
 
 
-public class Entry{
+public class Entry extends GameObject{
 
-    public String getSymbol(){
-        return "E";
-    }
+    public String getSymbol() {return "E";}
+
+
 }
