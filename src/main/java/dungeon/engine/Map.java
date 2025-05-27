@@ -155,6 +155,16 @@ public class Map {
         return null;  // No object of that type found
     }
 
+
+    //Clears Maps of all objects
+    public void clearMap() {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                grid[x][y].clear();  // Remove all objects from the list at each cell
+            }
+        }
+    }
+
 }
 
 

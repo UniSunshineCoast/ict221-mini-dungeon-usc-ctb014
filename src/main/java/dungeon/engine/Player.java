@@ -3,19 +3,21 @@ package dungeon.engine;
 public class Player extends GameObject{
 
     //Player Constants
-    private int maxHealth = 10;
+    private final int maxHealth = 10;
     public boolean gameOver = false;
+    private final int maxSteps = 100;
 
     // Player Attributes
     private int health;
     private int score;
-    private int steps;
+    private int stepCount;
+
 
     //Constructor
     public Player() {
         //Player Constants
         this.health = maxHealth;
-        this.steps = 100;
+        this.stepCount = 0;
     }
 
     public String getSymbol() {return "P";}
@@ -52,9 +54,17 @@ public class Player extends GameObject{
     // Gets the current player health
     public int getPlayerHealth() {return health;}
 
+    //Adds 1 to the step count
+    public void addStep(){
+        stepCount++;
+
+        if (stepCount > maxSteps) {
+            gameOver = true;
+        }
+    }
 
     //Gets the remanding steps
-    public int getSteps() {return steps;}
+    public int getSteps() {return stepCount;}
 
 
 

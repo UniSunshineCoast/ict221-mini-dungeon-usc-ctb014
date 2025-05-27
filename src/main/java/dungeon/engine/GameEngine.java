@@ -15,24 +15,17 @@ public class GameEngine {
     private static final int mapHeight = 10;
 
     //Start Location
-    private static final int gameStartLocationX = 0;
-    private static final int gameStartLocationY = mapHeight - 1;
+    private static int gameStartLocationX = 0;
+    private static int gameStartLocationY = mapHeight - 1;
 
     //Max Steps
     private static final int maxSteps = 100;
 
-    //Player Position Trackers
-    private static int playerX = gameStartLocationX;
-    private static int playerY = gameStartLocationY;
+    //Number of Levels
+    private static final int nLevels = 2;
 
-
-
-
-
-
-
-
-
+    //Check for loss state
+    private static boolean lost = false;
 
 
 
@@ -47,7 +40,7 @@ public class GameEngine {
         //Sets up the map
         Map gameMap = new Map(mapWidth, mapHeight);
 
-        //Creates an instance of each class
+        //Creates an instance of each class/object needed
         Player player = new Player();
         Entry entry = new Entry();
 
@@ -70,132 +63,170 @@ public class GameEngine {
         MeleeMutant mutant2 = new MeleeMutant(2,2);
         MeleeMutant mutant3 = new MeleeMutant(2,2);
 
+        Ladder ladder1 = new Ladder();
+
 
 
      /*____________________________________________________________*/
 
         //Map Set up
 
+        UniveralGameLoop:
+        for (int i = 0; i < nLevels; i++) {
+            //Add game Objects to the map
+            gameMap.placeObject(entry, gameStartLocationX, gameStartLocationY);
+            gameMap.placeObject(player, gameStartLocationX, gameStartLocationY);
 
-        //Add game Objects to the map
-        gameMap.placeObject(entry, playerX, playerY);
-        gameMap.placeObject(player, playerX, playerY);
+            //Gold
+            gameMap.randomObjectPlace(gold1);
+            gameMap.randomObjectPlace(gold2);
+            gameMap.randomObjectPlace(gold3);
+            gameMap.randomObjectPlace(gold4);
+            gameMap.randomObjectPlace(gold5);
 
-        //Gold
-        gameMap.randomObjectPlace(gold1);
-        gameMap.randomObjectPlace(gold2);
-        gameMap.randomObjectPlace(gold3);
-        gameMap.randomObjectPlace(gold4);
-        gameMap.randomObjectPlace(gold5);
+            //Traps
+            gameMap.randomObjectPlace(trap1);
+            gameMap.randomObjectPlace(trap2);
+            gameMap.randomObjectPlace(trap3);
+            gameMap.randomObjectPlace(trap4);
+            gameMap.randomObjectPlace(trap5);
 
-        //Traps
-        gameMap.randomObjectPlace(trap1);
-        gameMap.randomObjectPlace(trap2);
-        gameMap.randomObjectPlace(trap3);
-        gameMap.randomObjectPlace(trap4);
-        gameMap.randomObjectPlace(trap5);
+            //Health Potion
+            gameMap.randomObjectPlace(health1);
+            gameMap.randomObjectPlace(health2);
 
-        //Health Potion
-        gameMap.randomObjectPlace(health1);
-        gameMap.randomObjectPlace(health2);
+            //MeleeMutant
+            gameMap.randomObjectPlace(mutant1);
+            gameMap.randomObjectPlace(mutant2);
+            gameMap.randomObjectPlace(mutant3);
 
-        //MeleeMutant
-        gameMap.randomObjectPlace(mutant1);
-        gameMap.randomObjectPlace(mutant2);
-        gameMap.randomObjectPlace(mutant3);
-
-
-    /*____________________________________________________________*/
+            //Ladder
+            gameMap.randomObjectPlace(ladder1);
 
 
-        //Main Game Loop
-        for (int i = 0; i <= maxSteps; i++){
 
-            //Get Player info
-            int health = player.getPlayerHealth();
-            int score = player.getPlayerScore();
+            /*____________________________________________________________*/
 
-            //Draws the map to the Console
-            gameMap.printMap();
 
-            //Player Input Handling
-            String movePlayer;
-            boolean inputLoop = true;
+            //Main Game Loop
+            while (true) {
 
-            while (inputLoop) { /* Loops until valid input */
-                System.out.println("Score: " + score + " | Health: " + health);
-                System.out.println("Move " + (i + 1) + "/100 {'u','d','l','r'}--> ");
-                movePlayer = scanner.nextLine();
-                System.out.println(" ");
+                //Get Player info
+                int health = player.getPlayerHealth();
+                int score = player.getPlayerScore();
 
-                inputLoop = false;
+                //Draws the map to the Console
+                gameMap.printMap();
 
-                if (Objects.equals(movePlayer, "u")) {
-                    gameMap.up(player);
-                } else if (Objects.equals(movePlayer, "d")) {
-                    gameMap.down(player);
-                } else if (Objects.equals(movePlayer, "l")) {
-                    gameMap.left(player);
-                } else if (Objects.equals(movePlayer, "r")) {
-                    gameMap.right(player);
-                } else {
-                    System.out.println("!!!Invalid Move!!!");
-                    inputLoop = true;
+                //Step Counting
+                player.addStep();
+
+                //Player Input Handling
+                String movePlayer;
+                boolean inputLoop = true;
+
+                while (inputLoop) { /* Loops until valid input */
+                    System.out.println("Score: " + score + " | Health: " + health);
+                    System.out.println("Move " + (player.getSteps()) + "/100 {'u','d','l','r'}--> ");
+                    movePlayer = scanner.nextLine();
+                    System.out.println(" ");
+
+                    inputLoop = false;
+
+                    if (Objects.equals(movePlayer, "u")) {
+                        gameMap.up(player);
+                    } else if (Objects.equals(movePlayer, "d")) {
+                        gameMap.down(player);
+                    } else if (Objects.equals(movePlayer, "l")) {
+                        gameMap.left(player);
+                    } else if (Objects.equals(movePlayer, "r")) {
+                        gameMap.right(player);
+                    } else {
+                        System.out.println("!!!Invalid Move!!!");
+                        inputLoop = true;
+                    }
                 }
+
+                /*_____________________________________________________*/
+                //Player Stats updaters and logic
+
+                //Gets the objects in the current cell
+                List<GameObject> cellObjects = gameMap.cellObjects(player.getX(), player.getY());
+
+                //Gold logic handling
+                Gold gold = gameMap.getObjectInCell(player.getX(), player.getY(), Gold.class);
+                if (gold != null) {
+                    player.setPlayerScore(gold.getValue(), '+');
+                    gameMap.removeObject(gold);
+                }
+
+
+                //Trap logic handling
+                Trap trap = gameMap.getObjectInCell(player.getX(), player.getY(), Trap.class);
+                if (trap != null) {
+                    player.setPlayerHealth(trap.getDamage(), '-');
+                }
+
+
+                //Health Potion logic
+                Health healthPotion = gameMap.getObjectInCell(player.getX(), player.getY(), Health.class);
+                if (healthPotion != null) {
+                    player.setPlayerHealth(healthPotion.getHealthValue(), '+');
+                    gameMap.removeObject(healthPotion);
+                }
+
+
+                //Melee Mutant Logic
+                MeleeMutant mutant = gameMap.getObjectInCell(player.getX(), player.getY(), MeleeMutant.class);
+                if (mutant != null) {
+                    player.setPlayerHealth(mutant.getDamage(), '-');
+                    player.setPlayerScore(mutant.getValue(), '+');
+                    gameMap.removeObject(mutant);
+                }
+
+
+                //Ladder Logic
+                Ladder ladder = gameMap.getObjectInCell(player.getX(), player.getY(), Ladder.class);
+                if (ladder != null) {
+                    //Draws the map to the Console
+                    gameMap.printMap();
+
+
+                    gameStartLocationX = ladder1.getX();
+                    gameStartLocationY = ladder1.getY();
+
+                    gameMap.clearMap();
+
+                    break;
+                }
+
+
+
+                /*_____________________________________________________*/
+
+                //Check if player has lost
+
+                if (player.gameOver){
+                    lost = true;
+                    break UniveralGameLoop;
+                }
+
+
+
             }
+        }
 
-            /*_____________________________________________________*/
+        //END OF GAME
 
-            //Player Stats updaters and logic
-
-            //Gets the objects in the current cell
-            List<GameObject> cellObjects = gameMap.cellObjects(player.getX(), player.getY());
-
-            //Gold logic handling
-            Gold gold = gameMap.getObjectInCell(player.getX(), player.getY(), Gold.class);
-            if (gold != null) {
-                player.setPlayerScore(gold.getValue(), '+');
-                gameMap.removeObject(gold);
-            }
+        //Loose Condition
+        if (lost){
+            System.out.println("!!YOU LOST!!");
+        }
 
 
-            //Trap logic handling
-            Trap trap = gameMap.getObjectInCell(player.getX(), player.getY(), Trap.class);
-            if (trap != null) {
-                player.setPlayerHealth(trap.getDamage(), '-');
-            }
-
-
-            //Health Potion logic
-            Health healthPotion = gameMap.getObjectInCell(player.getX(), player.getY(), Health.class);
-            if (healthPotion != null) {
-                player.setPlayerHealth(healthPotion.getHealthValue(), '+');
-                gameMap.removeObject(healthPotion);
-            }
-
-            //Melee Mutant Logic
-            MeleeMutant mutant = gameMap.getObjectInCell(player.getX(), player.getY(), MeleeMutant.class);
-            if (mutant != null) {
-                player.setPlayerHealth(mutant.getDamage(), '-');
-                player.setPlayerScore(mutant.getValue(), '+');
-                gameMap.removeObject(mutant);
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        //Win Condition
+        else{
+            System.out.println("!!YOU WON!!");
         }
     }
 
