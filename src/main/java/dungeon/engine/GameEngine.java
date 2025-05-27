@@ -21,10 +21,25 @@ public class GameEngine {
     //Max Steps
     private static final int maxSteps = 100;
 
+    //Player Position Trackers
+    private static int playerX = gameStartLocationX;
+    private static int playerY = gameStartLocationY;
+
+
+
+
+
+
+
+
+
+
 
 
     //Main Game Code
     public static void main(String[] args) {
+
+        //DECLARATIONS
 
         //Create Scanner object
         Scanner scanner = new Scanner(System.in);
@@ -32,26 +47,65 @@ public class GameEngine {
         //Sets up the map
         Map gameMap = new Map(mapWidth, mapHeight);
 
-        //Creates an instance of each game object
+        //Creates an instance of each class
         Player player = new Player();
         Entry entry = new Entry();
 
-        //Game Objects
-        gameMap.placeObject(entry, gameStartLocationX, gameStartLocationY);
-        gameMap.placeObject(player, gameStartLocationX, gameStartLocationY);
+        Gold gold1 = new Gold(2);
+        Gold gold2 = new Gold(2);
+        Gold gold3 = new Gold(2);
+        Gold gold4 = new Gold(2);
+        Gold gold5 = new Gold(2);
+
+        Trap trap1 = new Trap(2);
+        Trap trap2 = new Trap(2);
+        Trap trap3 = new Trap(2);
+        Trap trap4 = new Trap(2);
+        Trap trap5 = new Trap(2);
+
+        Health health1 = new Health(4);
+        Health health2 = new Health(4);
+
+        MeleeMutant mutant1 = new MeleeMutant(2,2);
+        MeleeMutant mutant2 = new MeleeMutant(2,2);
+        MeleeMutant mutant3 = new MeleeMutant(2,2);
 
 
 
+     /*____________________________________________________________*/
+
+        //Map Set up
 
 
+        //Add game Objects to the map
+        gameMap.placeObject(entry, playerX, playerY);
+        gameMap.placeObject(player, playerX, playerY);
+
+        //Gold
+        gameMap.randomObjectPlace(gold1);
+        gameMap.randomObjectPlace(gold2);
+        gameMap.randomObjectPlace(gold3);
+        gameMap.randomObjectPlace(gold4);
+        gameMap.randomObjectPlace(gold5);
+
+        //Traps
+        gameMap.randomObjectPlace(trap1);
+        gameMap.randomObjectPlace(trap2);
+        gameMap.randomObjectPlace(trap3);
+        gameMap.randomObjectPlace(trap4);
+        gameMap.randomObjectPlace(trap5);
+
+        //Health Potion
+        gameMap.randomObjectPlace(health1);
+        gameMap.randomObjectPlace(health2);
+
+        //MeleeMutant
+        gameMap.randomObjectPlace(mutant1);
+        gameMap.randomObjectPlace(mutant2);
+        gameMap.randomObjectPlace(mutant3);
 
 
-
-
-
-
-
-
+    /*____________________________________________________________*/
 
 
         //Main Game Loop
@@ -68,9 +122,9 @@ public class GameEngine {
             String movePlayer;
             boolean inputLoop = true;
 
-            while (inputLoop) {
+            while (inputLoop) { /* Loops until valid input */
                 System.out.println("Score: " + score + " | Health: " + health);
-                System.out.println("Move:" + (i + 1) + " {'u','d','l','r'}--> ");
+                System.out.println("Move " + (i + 1) + "/100 {'u','d','l','r'}--> ");
                 movePlayer = scanner.nextLine();
                 System.out.println(" ");
 
@@ -88,20 +142,58 @@ public class GameEngine {
                     System.out.println("!!!Invalid Move!!!");
                     inputLoop = true;
                 }
+            }
+
+            /*_____________________________________________________*/
+
+            //Player Stats updaters and logic
+
+            //Gets the objects in the current cell
+            List<GameObject> cellObjects = gameMap.cellObjects(player.getX(), player.getY());
+
+            //Gold logic handling
+            Gold gold = gameMap.getObjectInCell(player.getX(), player.getY(), Gold.class);
+            if (gold != null) {
+                player.setPlayerScore(gold.getValue(), '+');
+                gameMap.removeObject(gold);
+            }
 
 
+            //Trap logic handling
+            Trap trap = gameMap.getObjectInCell(player.getX(), player.getY(), Trap.class);
+            if (trap != null) {
+                player.setPlayerHealth(trap.getDamage(), '-');
+            }
+
+
+            //Health Potion logic
+            Health healthPotion = gameMap.getObjectInCell(player.getX(), player.getY(), Health.class);
+            if (healthPotion != null) {
+                player.setPlayerHealth(healthPotion.getHealthValue(), '+');
+                gameMap.removeObject(healthPotion);
+            }
+
+            //Melee Mutant Logic
+            MeleeMutant mutant = gameMap.getObjectInCell(player.getX(), player.getY(), MeleeMutant.class);
+            if (mutant != null) {
+                player.setPlayerHealth(mutant.getDamage(), '-');
+                player.setPlayerScore(mutant.getValue(), '+');
+                gameMap.removeObject(mutant);
             }
 
 
 
-            //Cell Occupancy Check
-            List<GameObject> objectsInCell = gameMap.cellObjects(player.getX(), player.getY());
-
-            for (GameObject obj: objectsInCell){
-                if (obj instanceof Entry){System.out.println("Entry");}
 
 
-            }
+
+
+
+
+
+
+
+
+
 
 
         }

@@ -2,6 +2,7 @@ package dungeon.engine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Map {
     private final int width;
@@ -94,10 +95,66 @@ public class Map {
         System.out.println();
     }
 
+
+
+    //Empty Cell Functions
+
+
+    //Find empty cells on the map
+    public List<int[]> availableCells() {
+        List<int[]> emptyCells = new ArrayList<>();
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (grid[x][y].isEmpty()) {
+                    emptyCells.add(new int[]{x, y});
+                }
+            }
+        }
+
+        return emptyCells;
+    }
+
+    //Outputs a random empty cell
+    public int[] randomCellSelect() {
+        List<int[]> emptyCells = availableCells();
+        if (emptyCells.isEmpty()) {
+            return null; // No empty cells available
+        }
+        Random rand = new Random();
+        return emptyCells.get(rand.nextInt(emptyCells.size()));
+    }
+
+    //
+    public void randomObjectPlace(GameObject obj) {
+        int[] cords = randomCellSelect();
+
+        if (cords != null) {
+            int x = cords[0];
+            int y = cords[1];
+            placeObject(obj, x, y);
+        }
+    }
+
+
     // Get all objects at a specific cell (optional helper)
     public List<GameObject> cellObjects(int x, int y) {
         return grid[x][y];
+
     }
+
+    //Checks to see if an object is at a particular location
+    public <T extends GameObject> T getObjectInCell(int x, int y, Class<T> objectType) {
+        List<GameObject> objectsInCell = cellObjects(x, y);
+
+        for (GameObject obj : objectsInCell) {
+            if (objectType.isInstance(obj)) {
+                return objectType.cast(obj);
+            }
+        }
+        return null;  // No object of that type found
+    }
+
 }
 
 
