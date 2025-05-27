@@ -9,43 +9,92 @@ import java.util.Scanner;
 public class GameEngine {
 
 
+    //Game Constants
+    //Map Size
+    private static final int mapWidth = 10;
+    private static final int mapHeight = 10;
 
+    //Start Location
+    private static final int gameStartLocationX = 0;
+    private static final int gameStartLocationY = mapHeight - 1;
+
+    //Max Steps
+    private static final int maxSteps = 100;
+
+
+
+    //Main Game Code
     public static void main(String[] args) {
 
         //Create Scanner object
         Scanner scanner = new Scanner(System.in);
 
         //Sets up the map
-        Map gameMap = new Map(10, 10);
+        Map gameMap = new Map(mapWidth, mapHeight);
 
         //Creates an instance of each game object
         Player player = new Player();
         Entry entry = new Entry();
 
-        //Testing
-        gameMap.placeObject(entry, 2, 2);
-        gameMap.placeObject(player, 5, 5);
+        //Game Objects
+        gameMap.placeObject(entry, gameStartLocationX, gameStartLocationY);
+        gameMap.placeObject(player, gameStartLocationX, gameStartLocationY);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         //Main Game Loop
-        for (int i = 0; i <= 100; i++){
+        for (int i = 0; i <= maxSteps; i++){
 
+            //Get Player info
+            int health = player.getPlayerHealth();
+            int score = player.getPlayerScore();
+
+            //Draws the map to the Console
             gameMap.printMap();
 
-            String movePlayer = null;
+            //Player Input Handling
+            String movePlayer;
+            boolean inputLoop = true;
 
-            System.out.println("Move {'u','d','l','r'}: ");
-            movePlayer = scanner.nextLine();
-            System.out.println(" ");
+            while (inputLoop) {
+                System.out.println("Score: " + score + " | Health: " + health);
+                System.out.println("Move:" + (i + 1) + " {'u','d','l','r'}--> ");
+                movePlayer = scanner.nextLine();
+                System.out.println(" ");
+
+                inputLoop = false;
+
+                if (Objects.equals(movePlayer, "u")) {
+                    gameMap.up(player);
+                } else if (Objects.equals(movePlayer, "d")) {
+                    gameMap.down(player);
+                } else if (Objects.equals(movePlayer, "l")) {
+                    gameMap.left(player);
+                } else if (Objects.equals(movePlayer, "r")) {
+                    gameMap.right(player);
+                } else {
+                    System.out.println("!!!Invalid Move!!!");
+                    inputLoop = true;
+                }
 
 
-            if (Objects.equals(movePlayer, "u")) {gameMap.up(player);}
-            if (Objects.equals(movePlayer, "d")) {gameMap.down(player);}
-            if (Objects.equals(movePlayer, "l")) {gameMap.left(player);}
-            if (Objects.equals(movePlayer, "r")) {gameMap.right(player);}
+            }
 
 
-            //Check what objects are in the same cell as the player
+
+            //Cell Occupancy Check
             List<GameObject> objectsInCell = gameMap.cellObjects(player.getX(), player.getY());
 
             for (GameObject obj: objectsInCell){

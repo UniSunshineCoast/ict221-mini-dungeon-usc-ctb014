@@ -44,6 +44,20 @@ public class Map {
         grid[x][y].remove(obj);
     }
 
+    //More logic, used for all directions
+    private void moveObject(GameObject obj, int newX, int newY) {
+        int oldX = obj.getX();
+        int oldY = obj.getY();
+
+        if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
+            grid[oldX][oldY].remove(obj);
+            obj.setPosition(newX, newY);
+            grid[newX][newY].add(obj);
+        } else {
+            System.out.println("Out of bounds!");
+        }
+    }
+
     // Moves an object in a specific direction
     public void up(GameObject obj) {
         moveObject(obj, obj.getX(), obj.getY() - 1);
@@ -61,19 +75,7 @@ public class Map {
         moveObject(obj, obj.getX() + 1, obj.getY());
     }
 
-    // Core move logic (for all directions)
-    private void moveObject(GameObject obj, int newX, int newY) {
-        int oldX = obj.getX();
-        int oldY = obj.getY();
 
-        if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
-            grid[oldX][oldY].remove(obj);
-            obj.setPosition(newX, newY);
-            grid[newX][newY].add(obj);
-        } else {
-            System.out.println("Move out of bounds!");
-        }
-    }
 
     // Prints the map: shows only the last object in each cell
     public void printMap() {
