@@ -8,9 +8,7 @@ public class Maze {
     private static final Random rand = new Random();
 
 
-
-    /* This was originally a python program that was translated to Java */
-
+    //Maze Generating Algorithm creates a maze of any size, ODD width and length for best result
     public static void generateMaze(Map map, GameObject wallTemplate, int maxWalkLength, int throughPathChance) {
         int width = map.getWidth();
         int height = map.getHeight();
@@ -32,6 +30,7 @@ public class Maze {
                         map.placeObject(wall, x, y);
                     } catch (Exception e) {
                         e.printStackTrace();
+                        System.out.println("Error creating wall at " + x + ", " + y);
                     }
                 }
             }
