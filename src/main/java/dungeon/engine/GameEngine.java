@@ -219,17 +219,15 @@ public class GameEngine {
 
                     inputLoop = false;
 
-                    if (Objects.equals(movePlayer, "u")) {
-                        gameMap.up(player);
-                    } else if (Objects.equals(movePlayer, "d")) {
-                        gameMap.down(player);
-                    } else if (Objects.equals(movePlayer, "l")) {
-                        gameMap.left(player);
-                    } else if (Objects.equals(movePlayer, "r")) {
-                        gameMap.right(player);
-                    } else {
-                        System.out.println("!!!Invalid Move!!!");
-                        inputLoop = true;
+                    switch (movePlayer) {
+                        case "u" -> gameMap.up(player);
+                        case "d" -> gameMap.down(player);
+                        case "l" -> gameMap.left(player);
+                        case "r" -> gameMap.right(player);
+                        case null, default -> {
+                            System.out.println("!!!Invalid Move!!!");
+                            inputLoop = true;
+                        }
                     }
                 }
 
