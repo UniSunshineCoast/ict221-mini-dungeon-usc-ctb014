@@ -45,17 +45,38 @@ public class Map {
         grid[x][y].remove(obj);
     }
 
+    //Removes all objects at a particular location
+    public void removeObjectsAt(int x, int y) {
+        grid[x][y].clear();
+    }
+
+
+    //Checks to see if the cell has an object that blocks movement into that cell
+    public boolean canEnterCell(int x, int y) {
+        if (x < 0 || x >= width || y < 0 || y >= height) {
+            return false; // Out of bounds
+        }
+
+        for (GameObject obj : grid[x][y]) {
+            if (obj.isBlocksMovement()) {
+                return false; //Object allows movement into Cell
+            }
+        }
+        return true; //Blocks object from being able to move into Cell
+    }
+
+
     //More logic, used for all directions
     private void moveObject(GameObject obj, int newX, int newY) {
         int oldX = obj.getX();
         int oldY = obj.getY();
 
-        if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
+        if (canEnterCell(newX,newY)) {
             grid[oldX][oldY].remove(obj);
             obj.setPosition(newX, newY);
             grid[newX][newY].add(obj);
         } else {
-            System.out.println("Out of bounds!");
+            System.out.println("You Can't Go That Way");
         }
     }
 
@@ -125,7 +146,7 @@ public class Map {
         return emptyCells.get(rand.nextInt(emptyCells.size()));
     }
 
-    //
+    //Randomly places an object on the map
     public void randomObjectPlace(GameObject obj) {
         int[] cords = randomCellSelect();
 
@@ -165,6 +186,8 @@ public class Map {
         }
     }
 
+    public int getHeight() {return height;}
+    public int getWidth() {return width;}
 }
 
 

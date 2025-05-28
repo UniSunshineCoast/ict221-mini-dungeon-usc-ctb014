@@ -7,6 +7,7 @@ public class Trap extends GameObject{
     //Constructor
     public Trap(int damage){
         this.damage = damage;
+        this.blocksMovement = false;
     }
 
     public int getDamage(){

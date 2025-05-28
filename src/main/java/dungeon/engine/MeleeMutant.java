@@ -8,6 +8,7 @@ public class MeleeMutant extends GameObject{
     public MeleeMutant(int damage, int value) {
         this.damage = damage;
         this.value = value;
+        this.blocksMovement = false;
     }
 
     public int getDamage() {

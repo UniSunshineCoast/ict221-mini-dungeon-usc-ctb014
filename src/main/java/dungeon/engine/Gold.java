@@ -7,6 +7,7 @@ public class Gold extends GameObject{
     //Constructor
     public Gold(int value){
         this.value = value;
+        this.blocksMovement = false;
     }
 
     //Gets the current coins value

@@ -6,6 +6,7 @@ public class Health extends GameObject{
 
     public Health(int healthValue) {
         this.healthValue = healthValue;
+        this.blocksMovement = false;
     }
 
     public int getHealthValue() {

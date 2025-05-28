@@ -6,20 +6,21 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+
 public class GameEngine {
 
 
     //Game Constants
     //Map Size
-    private static final int mapWidth = 10;
-    private static final int mapHeight = 10;
+    //Due to how my maze algorithm works it is impossible to create a maze that is not an odd number
+    //Maze algorithm was originally coded in python can provide if needed
+    private static final int mapWidth = 11;
+    private static final int mapHeight = 11;
 
     //Start Location
-    private static int gameStartLocationX = 0;
-    private static int gameStartLocationY = mapHeight - 1;
+    private static int gameStartLocationX = 1;
+    private static int gameStartLocationY = mapHeight - 2;
 
-    //Max Steps
-    private static final int maxSteps = 100;
 
     //Number of Levels
     private static final int nLevels = 2;
@@ -30,7 +31,7 @@ public class GameEngine {
 
 
     //Main Game Code
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
         //DECLARATIONS
 
@@ -65,14 +66,24 @@ public class GameEngine {
 
         Ladder ladder1 = new Ladder();
 
+        Wall wall = new Wall();
+
+
 
 
      /*____________________________________________________________*/
 
         //Map Set up
 
-        UniveralGameLoop:
+        UniversalGameLoop:
         for (int i = 0; i < nLevels; i++) {
+
+            //Walls
+            Maze.generateMaze(gameMap, wall, 3, 30);
+
+            //Ladder
+            gameMap.randomObjectPlace(ladder1);
+
             //Add game Objects to the map
             gameMap.placeObject(entry, gameStartLocationX, gameStartLocationY);
             gameMap.placeObject(player, gameStartLocationX, gameStartLocationY);
@@ -100,8 +111,7 @@ public class GameEngine {
             gameMap.randomObjectPlace(mutant2);
             gameMap.randomObjectPlace(mutant3);
 
-            //Ladder
-            gameMap.randomObjectPlace(ladder1);
+
 
 
 
@@ -110,7 +120,6 @@ public class GameEngine {
 
             //Main Game Loop
             while (true) {
-
                 //Get Player info
                 int health = player.getPlayerHealth();
                 int score = player.getPlayerScore();
@@ -150,9 +159,6 @@ public class GameEngine {
                 /*_____________________________________________________*/
                 //Player Stats updaters and logic
 
-                //Gets the objects in the current cell
-                List<GameObject> cellObjects = gameMap.cellObjects(player.getX(), player.getY());
-
                 //Gold logic handling
                 Gold gold = gameMap.getObjectInCell(player.getX(), player.getY(), Gold.class);
                 if (gold != null) {
@@ -191,10 +197,21 @@ public class GameEngine {
                     //Draws the map to the Console
                     gameMap.printMap();
 
-
                     gameStartLocationX = ladder1.getX();
                     gameStartLocationY = ladder1.getY();
 
+                    //Console Update to show next level is updating
+                    System.out.println("!!!NEXT LEVEL!!!");
+                    System.out.print("Loading");
+
+                    sleep(400);
+                    for (int j = 0; j < 3; j++) {
+                        System.out.print(".");
+                        sleep(400);
+                    }
+                    System.out.println(" ");
+
+                    //Clears Game Field
                     gameMap.clearMap();
 
                     break;
@@ -208,7 +225,7 @@ public class GameEngine {
 
                 if (player.gameOver){
                     lost = true;
-                    break UniveralGameLoop;
+                    break UniversalGameLoop;
                 }
 
 
@@ -233,6 +250,20 @@ public class GameEngine {
 
 
 
+
+    //Stops the program for a certain amount of time
+    private static void sleep(int milliseconds){
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
     // OLD Code
 
 
@@ -241,7 +272,7 @@ public class GameEngine {
 
      * Note: depending on your game, you might want to change this from 'int' to String or something?
      */
-    private Cell[][] map;
+    private final Cell[][] map;
 
 
     /**

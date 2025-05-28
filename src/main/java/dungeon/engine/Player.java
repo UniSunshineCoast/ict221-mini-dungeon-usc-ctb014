@@ -18,6 +18,7 @@ public class Player extends GameObject{
         //Player Constants
         this.health = maxHealth;
         this.stepCount = 0;
+        this.blocksMovement = false;
     }
 
     public String getSymbol() {return "P";}
