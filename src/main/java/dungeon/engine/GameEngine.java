@@ -1,6 +1,6 @@
 package dungeon.engine;
 
-import javafx.scene.text.Text;
+
 
 import java.util.List;
 import java.util.Scanner;
@@ -33,11 +33,8 @@ public class GameEngine {
     private static int difficulty = 3;
 
 
-
-
-
     //Main Game Code
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         //DECLARATIONS
 
@@ -66,23 +63,22 @@ public class GameEngine {
         Health health1 = new Health(4);
         Health health2 = new Health(4);
 
-        MeleeMutant mutant1 = new MeleeMutant(2,2);
-        MeleeMutant mutant2 = new MeleeMutant(2,2);
-        MeleeMutant mutant3 = new MeleeMutant(2,2);
+        MeleeMutant mutant1 = new MeleeMutant(2, 2);
+        MeleeMutant mutant2 = new MeleeMutant(2, 2);
+        MeleeMutant mutant3 = new MeleeMutant(2, 2);
 
-        RangedMutant rangedMutant1 = new RangedMutant(2,2);
-        RangedMutant rangedMutant2 = new RangedMutant(2,2);
-        RangedMutant rangedMutant3 = new RangedMutant(2,2);
-        RangedMutant rangedMutant4 = new RangedMutant(2,2);
-        RangedMutant rangedMutant5 = new RangedMutant(2,2);
-        RangedMutant rangedMutant6 = new RangedMutant(2,2);
-        RangedMutant rangedMutant7 = new RangedMutant(2,2);
-        RangedMutant rangedMutant8 = new RangedMutant(2,2);
-        RangedMutant rangedMutant9 = new RangedMutant(2,2);
-        RangedMutant rangedMutant10 = new RangedMutant(2,2);
-        RangedMutant rangedMutant11 = new RangedMutant(2,2);
-        RangedMutant rangedMutant12 = new RangedMutant(2,2);
-
+        RangedMutant rangedMutant1 = new RangedMutant(2, 2);
+        RangedMutant rangedMutant2 = new RangedMutant(2, 2);
+        RangedMutant rangedMutant3 = new RangedMutant(2, 2);
+        RangedMutant rangedMutant4 = new RangedMutant(2, 2);
+        RangedMutant rangedMutant5 = new RangedMutant(2, 2);
+        RangedMutant rangedMutant6 = new RangedMutant(2, 2);
+        RangedMutant rangedMutant7 = new RangedMutant(2, 2);
+        RangedMutant rangedMutant8 = new RangedMutant(2, 2);
+        RangedMutant rangedMutant9 = new RangedMutant(2, 2);
+        RangedMutant rangedMutant10 = new RangedMutant(2, 2);
+        RangedMutant rangedMutant11 = new RangedMutant(2, 2);
+        RangedMutant rangedMutant12 = new RangedMutant(2, 2);
 
 
         Ladder ladder1 = new Ladder();
@@ -92,7 +88,7 @@ public class GameEngine {
 
 
 
-     /*____________________________________________________________*/
+        /*____________________________________________________________*/
 
         //Difficulty setup
 
@@ -172,18 +168,42 @@ public class GameEngine {
 
 
             //Ranged Mutant
-            if (difficulty >= 1) {gameMap.randomObjectPlace(rangedMutant1);}
-            if (difficulty >= 2) {gameMap.randomObjectPlace(rangedMutant2);}
-            if (difficulty >= 3) {gameMap.randomObjectPlace(rangedMutant3);}
-            if (difficulty >= 4) {gameMap.randomObjectPlace(rangedMutant4);}
-            if (difficulty >= 5) {gameMap.randomObjectPlace(rangedMutant5);}
-            if (difficulty >= 6) {gameMap.randomObjectPlace(rangedMutant6);}
-            if (difficulty >= 7) {gameMap.randomObjectPlace(rangedMutant7);}
-            if (difficulty >= 8) {gameMap.randomObjectPlace(rangedMutant8);}
-            if (difficulty >= 9) {gameMap.randomObjectPlace(rangedMutant9);}
-            if (difficulty >= 10) {gameMap.randomObjectPlace(rangedMutant10);}
-            if (difficulty >= 11) {gameMap.randomObjectPlace(rangedMutant11);}
-            if (difficulty >= 12) {gameMap.randomObjectPlace(rangedMutant12);}
+            if (difficulty >= 1) {
+                gameMap.randomObjectPlace(rangedMutant1);
+            }
+            if (difficulty >= 2) {
+                gameMap.randomObjectPlace(rangedMutant2);
+            }
+            if (difficulty >= 3) {
+                gameMap.randomObjectPlace(rangedMutant3);
+            }
+            if (difficulty >= 4) {
+                gameMap.randomObjectPlace(rangedMutant4);
+            }
+            if (difficulty >= 5) {
+                gameMap.randomObjectPlace(rangedMutant5);
+            }
+            if (difficulty >= 6) {
+                gameMap.randomObjectPlace(rangedMutant6);
+            }
+            if (difficulty >= 7) {
+                gameMap.randomObjectPlace(rangedMutant7);
+            }
+            if (difficulty >= 8) {
+                gameMap.randomObjectPlace(rangedMutant8);
+            }
+            if (difficulty >= 9) {
+                gameMap.randomObjectPlace(rangedMutant9);
+            }
+            if (difficulty >= 10) {
+                gameMap.randomObjectPlace(rangedMutant10);
+            }
+            if (difficulty >= 11) {
+                gameMap.randomObjectPlace(rangedMutant11);
+            }
+            if (difficulty >= 12) {
+                gameMap.randomObjectPlace(rangedMutant12);
+            }
 
 
 
@@ -267,10 +287,10 @@ public class GameEngine {
 
                 // Ranged Mutant Logic
 
-                List<int[]> checkOffSet = List.of(new int[]{0, -2}, new int[]{0 ,2},new int[]{-2, 0}, new int[]{2,0});
+                List<int[]> checkOffSet = List.of(new int[]{0, -2}, new int[]{0, 2}, new int[]{-2, 0}, new int[]{2, 0});
 
 
-                for (int[] checkCell:checkOffSet){
+                for (int[] checkCell : checkOffSet) {
                     int checkX = player.getX() + checkCell[0];
                     int checkY = player.getY() + checkCell[1];
 
@@ -285,13 +305,11 @@ public class GameEngine {
                 }
 
 
-
                 RangedMutant rangedMutant = gameMap.getObjectInCell(player.getX(), player.getY(), RangedMutant.class);
                 if (rangedMutant != null) {
                     player.setPlayerScore(rangedMutant.getValue(), '+');
                     gameMap.removeObject(rangedMutant);
                 }
-
 
 
                 //Ladder Logic
@@ -327,11 +345,10 @@ public class GameEngine {
 
                 //Check if player has lost
 
-                if (player.gameOver){
+                if (player.gameOver) {
                     lost = true;
                     break UniversalGameLoop;
                 }
-
 
 
             }
@@ -340,23 +357,20 @@ public class GameEngine {
         //END OF GAME
 
         //Loose Condition
-        if (lost){
+        if (lost) {
             System.out.println("!!YOU LOST!!");
         }
 
 
         //Win Condition
-        else{
+        else {
             System.out.println("!!YOU WON!!");
         }
     }
 
 
-
-
-
     //Stops the program for a certain amount of time
-    private static void sleep(int milliseconds){
+    private static void sleep(int milliseconds) {
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
@@ -366,49 +380,4 @@ public class GameEngine {
     }
 
 
-    //Gets Size of Game Map
-    public int getSizeX() {return mapWidth;}
-
-    public int getSizeY() {return mapHeight;}
-
-
-
-
-    // OLD Code
-
-
-    /**
-     * An example board to store the current game state.
-
-     * Note: depending on your game, you might want to change this from 'int' to String or something?
-     */
-    private final Cell[][] map;
-
-
-    /**
-     * Creates a square game board.
-     *
-     * @param size the width and height.
-     */
-
-    //Visual Map
-    public GameEngine(int size) {
-        map = new Cell[size][size];
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                Cell cell = new Cell();
-                Text text = new Text(" ");
-                cell.getChildren().add(text);
-                map[i][j] = cell;
-            }
-        }
-
-
-        map[0][0].setStyle("-fx-background-color: #7baaa4");
-        map[size-1][size-1].setStyle("-fx-background-color: #7baaa4");
-    }
-    }
-
-
-
+}
