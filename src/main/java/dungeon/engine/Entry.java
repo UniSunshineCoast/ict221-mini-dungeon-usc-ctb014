@@ -12,4 +12,6 @@ public class Entry extends GameObject{
     }
 
     public String getSymbol() {return "E";}
+
+    public String getImagePath() {return "/Door.png";}
 }

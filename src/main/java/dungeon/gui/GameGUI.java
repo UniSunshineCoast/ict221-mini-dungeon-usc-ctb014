@@ -1,30 +1,39 @@
 package dungeon.gui;
 
-import dungeon.engine.GameEngine;
+import dungeon.engine.GameEngine2;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-/**
- * GUI for the Maze Runner Game.
- *
- * NOTE: Do NOT run this class directly in IntelliJ - run 'RunGame' instead.
- */
 public class GameGUI extends Application {
+
+    // Static reference to GameEngine2
+    private static GameEngine2 engine;
+
+    public static void setGameEngine(GameEngine2 gameEngine) {
+        engine = gameEngine;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        BorderPane root = FXMLLoader.load(getClass().getResource("game_gui.fxml"));
+        // Load the FXML layout
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("game_gui.fxml"));
+        BorderPane root = loader.load();
 
+        // Get the Controller from the FXML
+        Controller controller = loader.getController();
+
+        // Pass the GameEngine2 instance to the Controller
+        controller.setGameEngine(engine);
+
+        // Create and show the scene
         primaryStage.setScene(new Scene(root, 800, 800));
         primaryStage.setTitle("MiniDungeon Game");
         primaryStage.show();
     }
 
-    /** In IntelliJ, do NOT run this method.  Run 'RunGame.main()' instead. */
     public static void main(String[] args) {
         launch(args);
     }

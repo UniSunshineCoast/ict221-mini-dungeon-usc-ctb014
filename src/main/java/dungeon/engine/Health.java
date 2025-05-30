@@ -14,4 +14,6 @@ public class Health extends GameObject{
     }
 
     public String getSymbol() {return("H");}
+
+    public String getImagePath() {return "/Health.png";}
 }

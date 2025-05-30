@@ -3,7 +3,6 @@ package dungeon.engine;
 import javafx.scene.text.Text;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -367,6 +366,12 @@ public class GameEngine {
     }
 
 
+    //Gets Size of Game Map
+    public int getSizeX() {return mapWidth;}
+
+    public int getSizeY() {return mapHeight;}
+
+
 
 
     // OLD Code
@@ -403,33 +408,7 @@ public class GameEngine {
         map[0][0].setStyle("-fx-background-color: #7baaa4");
         map[size-1][size-1].setStyle("-fx-background-color: #7baaa4");
     }
-
-
-
-    /**
-     * The size of the current game.
-     *
-     * @return this is both the width and the height.
-     */
-    public int getSize() {
-        return map.length;
     }
 
-    /**
-     * The map of the current game.
-     *
-     * @return the map, which is a 2d array.
-     */
-    public Cell[][] getMap() {
-        return map;
-    }
 
-//    /**
-//     * Plays a text-based game
-//     */
-//    public static void main(String[] args) {
-//        GameEngine engine = new GameEngine(10);
-//        System.out.printf("The size of map is %d * %d\n", engine.getSize(), engine.getSize());
-//    }
 
-}

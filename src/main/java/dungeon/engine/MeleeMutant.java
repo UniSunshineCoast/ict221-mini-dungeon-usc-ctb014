@@ -21,5 +21,7 @@ public class MeleeMutant extends GameObject{
 
     public String getSymbol() {return("M");}
 
+    public String getImagePath() {return "/monster.png";}
+
 
 }

@@ -25,5 +25,7 @@ public abstract class GameObject {
 
     public abstract String getSymbol();
 
+    public String getImagePath() {return null;}  // By default, no image (optional)
+
 }
 

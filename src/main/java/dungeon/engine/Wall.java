@@ -7,4 +7,6 @@ public class Wall extends GameObject{
     }
 
     public String getSymbol() {return "#";}
+
+    public String getImagePath() {return "/wall.png";}
 }

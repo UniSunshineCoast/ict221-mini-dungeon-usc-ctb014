@@ -23,6 +23,8 @@ public class Player extends GameObject{
 
     public String getSymbol() {return "P";}
 
+    public String getImagePath() {return "/player.png";}
+
 
     // Changes the score based on an operation
     public void setPlayerScore(int scoreAmount, char operation) {

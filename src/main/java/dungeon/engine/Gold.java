@@ -17,4 +17,6 @@ public class Gold extends GameObject{
 
 
     public String getSymbol() {return "G";}
+
+    public String getImagePath() {return "/Gold.png";}
 }

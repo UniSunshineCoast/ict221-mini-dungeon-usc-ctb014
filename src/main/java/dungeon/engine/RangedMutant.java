@@ -19,6 +19,8 @@ public class RangedMutant extends GameObject {
         return "R";
     }
 
+    public String getImagePath() {return "/RangedMonster.png";}
+
     public boolean tryAttack() {
         // 50% chance
         return rand.nextBoolean();

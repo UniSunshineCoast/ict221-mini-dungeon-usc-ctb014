@@ -16,4 +16,6 @@ public class Trap extends GameObject{
 
 
     public String getSymbol() {return("T");}
+
+    public String getImagePath() {return "/Fire.png";}
 }
